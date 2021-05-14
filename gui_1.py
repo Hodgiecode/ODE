@@ -51,9 +51,6 @@ def text_window():
     filename.write(e1+" "+e2+" "+e3+" "+e4+" "+e5+" "+e6)
     filename.close()
 
-    subprocess.run([entryText7.get()])
-    getlastfile=max(os.listdir(),key=os.path.getctime)
-
     if entryText7.get().split(".")[1]=="exe":
         subprocess.run([entryText7.get()])
         getlastfile=max(os.listdir(),key=os.path.getctime)
@@ -148,7 +145,7 @@ window.title("Ode v1.0")
 window.geometry("750x180+120+120")
 window.resizable(False, False)
 
-l0=Label(window, text="y''+p(x)*y'+q(x)*y=f(x) [a,b]")
+l0=Label(window, text="y'=f(x,y) [a,b]")
 l0.config(font=("Arial",15))
 l0.place(x=50, y=20)
 
@@ -167,13 +164,13 @@ entryText2.set( "b=" )
 entryText3 = tk.StringVar()
 e3=Entry(window, textvariable=entryText3, font=("Arial",12), width=10)
 e3.place(x=250,y=60)
-entryText3.set( "f(a)=" )
+entryText3.set( "h=" )
 
 
 entryText4 = tk.StringVar()
 e4=Entry(window, textvariable=entryText4, font=("Arial",12), width=10)
 e4.place(x=350,y=60)
-entryText4.set( "f(b)=" )
+entryText4.set( "y(a)=" )
 
 
 entryText5 = tk.StringVar()
