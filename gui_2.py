@@ -50,10 +50,7 @@ def text_window():
     filename=open(entryText8.get(),"w",encoding="utf-8")
     filename.write(e1+" "+e2+" "+e3+" "+e4+" "+e5+" "+e6)
     filename.close()
-
-    subprocess.run([entryText7.get()])
-    getlastfile=max(os.listdir(),key=os.path.getctime)
-
+    
     if entryText7.get().split(".")[1]=="exe":
         subprocess.run([entryText7.get()])
         getlastfile=max(os.listdir(),key=os.path.getctime)
