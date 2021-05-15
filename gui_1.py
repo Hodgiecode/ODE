@@ -9,6 +9,25 @@ import os
 from tkinter import Tk, Label, StringVar, Button, Entry, Frame, Text, Toplevel, filedialog, LEFT, END
 
 from math import *
+from solver1 import calc
+
+def run_tester():
+    e1=entryText1.get()
+    e2=entryText2.get()
+    e3=entryText3.get()
+    e4=entryText4.get()
+    e5=entryText5.get()
+    e6=entryText6.get()
+    e10=entryText10.get()
+
+    if e10!= "":
+        y = calc(float(e1), float(e2), float(e3), float(e4), float(e5), int(e6), e10)
+        s=""
+        for i in range(len(y)):
+            s=s+str(y[i][0])+" "+str(y[i][1])+"\n"
+
+        show_result(s)
+
 
 def read_file():
     fp=filedialog.askopenfilename()
@@ -37,9 +56,6 @@ def read_file():
     
 
 def text_window():
-    s_lst=['acos','asin','atan','atan2','ceil','cos','cosh','degrees','e','exp','fabs','floor','fmod','frexp','hypot','ldexp','log','log10',
-            'modf','pi','pow','radians','sin','sinh','sqrt','tan','tanh']
-
     e1=entryText1.get()
     e2=entryText2.get()
     e3=entryText3.get()
@@ -51,7 +67,7 @@ def text_window():
     filename.write(e1+" "+e2+" "+e3+" "+e4+" "+e5+" "+e6)
     filename.close()
 
-    if entryText7.get().split(".")[1]=="exe":
+    if len(entryText7.get().split("."))>1 and entryText7.get().split(".")[1]=="exe":
         subprocess.run([entryText7.get()])
         getlastfile=max(os.listdir(),key=os.path.getctime)
    
@@ -59,14 +75,23 @@ def text_window():
             fout=open(getlastfile,"r",encoding="utf-8")
             data=fout.read()
             fout.close()
+            show_result(data)
         else:
             data="Error"
+            
 
-    if entryText7.get().split(".")[1]=="txt":
+    if len(entryText7.get().split("."))>1 and entryText7.get().split(".")[1]=="txt":
         fout=open(entryText7.get(),"r",encoding="utf-8")
         data=fout.read()
         fout.close()
+
+        show_result(data)
     
+
+def show_result(data):
+    s_lst=['acos','asin','atan','atan2','ceil','cos','cosh','degrees','e','exp','fabs','floor','fmod','frexp','hypot','ldexp','log','log10',
+            'modf','pi','pow','radians','sin','sinh','sqrt','tan','tanh']
+
     window2 = Toplevel(window)
     window2.title("Solution")
     window2.geometry("500x500+120+120")
@@ -142,7 +167,7 @@ def ask_window():
         
 window = Tk()
 window.title("Ode v1.0")
-window.geometry("750x180+120+120")
+window.geometry("750x240+120+120")
 window.resizable(False, False)
 
 l0=Label(window, text="y'=f(x,y) [a,b]")
@@ -184,30 +209,44 @@ e6=Entry(window, textvariable=entryText6, font=("Arial",12), width=10)
 e6.place(x=550,y=60)
 entryText6.set( "n=" )
 
+button2=Button(window,text="Load from file",  width=10, command=read_file)
+button2.place(x=650,y=60)
 
-entryText7 = tk.StringVar()
-e7=Entry(window, textvariable=entryText7, font=("Arial",12), width=25)
-e7.place(x=50,y=140)
-
-button0= Button(window,text="exe or txt",  width=10, command=ask_window)
-button0.place(x=300,y=140)
-
-entryText8 = tk.StringVar()
-e8=Entry(window, textvariable=entryText8, font=("Arial",12), width=25)
-e8.place(x=400,y=140)
-e8.insert(END,"datin.txt")
-
-button1= Button(window,text="Get solution",  width=10, command=text_window)
-button1.place(x=650,y=140)
 
 l9=Label(window, text="Solution function")
 l9.place(x=50, y=100)
 entryText9 = tk.StringVar()
-e9=Entry(window, textvariable=entryText9, font=("Arial",12), width=63)
+e9=Entry(window, textvariable=entryText9, font=("Arial",12), width=64)
 e9.place(x=150,y=100)
 
-button2=Button(window,text="Load from file",  width=10, command=read_file)
-button2.place(x=650,y=60)
+
+l10=Label(window, text="F")
+l10.place(x=50, y=140)
+entryText10 = tk.StringVar()
+e10=Entry(window, textvariable=entryText10, font=("Arial",12), width=50)
+e10.place(x=150,y=140)
+
+button3=Button(window,text="Run",  width=10, command=run_tester)
+button3.place(x=650,y=140)
+
+
+####################
+
+button0= Button(window,text="Exe or txt",  width=10, command=ask_window)
+button0.place(x=300,y=180)
+
+entryText7 = tk.StringVar()
+e7=Entry(window, textvariable=entryText7, font=("Arial",12), width=25)
+e7.place(x=50,y=180)
+
+entryText8 = tk.StringVar()
+e8=Entry(window, textvariable=entryText8, font=("Arial",12), width=25)
+e8.place(x=400,y=180)
+e8.insert(END,"datin.txt")
+
+button1= Button(window,text="Get solution",  width=10, command=text_window)
+button1.place(x=650,y=180)
 
 window.mainloop()
+
 
