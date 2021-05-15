@@ -96,12 +96,48 @@ def calc(a, b, f0, f1, eps, n, f, p, q):
     index2 = 0
     flag = 1
 
-    y = iteration(a, b, f0, f1, n, s_dict, f, p, q)
+    while max_iter < 10:
+        index1 = 0
+        index2 = 0
+        y = iteration(a, b, f0, f1, n1, s_dict, f, p, q)
+        
+        for i in range(n1):
+            if (i % (float(n1) / n) == 0):
+                test_1.append(y[i])
+                index1 = index1 + 1
+
+        y = []
+
+        y = iteration(a, b, f0, f1, n2, s_dict, f, p, q)
+        
+        for i in range(n2):
+            if (i % (float(n2) / n) == 0):
+                test_2.append(y[i])
+                index2 = index2 + 1
+
+
+        for i in range(n):
+            if abs(test_1[i] - test_2[i]) > eps:
+                flag = 0
+                break
+
+        if flag == 1:
+            y = test_1
+            break
+
+        n1 = n2
+        n2 = 10 * n2
+        h1 = h2
+        h2 = h2 * 0.1
+        
+        max_iter = max_iter + 1
+
 
     r = []
     for i in range(len(y)):
-        r.append([a + h*i, y[i]])
-    
+        r.append([round(a + h*i,5), round(y[i],5)])
+
+    r.append([float(b),float(f1)])
     return r
 
-#calc(1,3,1,27,0.000001,40,"0","1/x","-9/(x*x)")
+#calc(1,3,1,27,0.0001,40,"0","1/x","-9/(x*x)")

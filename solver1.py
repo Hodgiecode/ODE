@@ -121,7 +121,7 @@ def calc(a, b, h, y_a, eps, n, func):
                 break
 
         if flag == 1:
-            y = test_1[i]
+            y = test_1
             break
 
         n1 = n2
@@ -136,7 +136,7 @@ def calc(a, b, h, y_a, eps, n, func):
 
     r=[]
     for i in range(len(y)):
-        r.append([a + h*i, y[i]])
+        r.append([round(a + h*i,5), round(y[i])])
 
     return r
 
